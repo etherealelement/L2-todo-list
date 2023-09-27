@@ -1,10 +1,11 @@
 import './styles/main.css'
+import {Home} from "./pages/home-page/Home.tsx";
 function App() {
 
   return (
     <>
     <div className="container">
-      <h1>hello</h1>
+      <Home></Home>
     </div>
     </>
   )

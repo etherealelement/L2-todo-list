@@ -1,0 +1,19 @@
+.button {
+    color: purple;
+    padding: 10px 15px;
+    background: #ffffff;
+    border: none;
+    border: 1px solid purple;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.button:hover {
+    background: purple;
+    color: #fff;
+}
+
+.button:active {
+    transform: translateY(-4px);
+}
