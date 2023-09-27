@@ -1,0 +1,11 @@
+.task__label {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+}
+.task__container{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
