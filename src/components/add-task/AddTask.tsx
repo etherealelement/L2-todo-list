@@ -2,7 +2,7 @@
 import styles from "./AddTask.module.css";
 import {Button} from "../ui/button/Button.tsx";
 import {Input} from "../ui/input/input.tsx";
-import { memo, useCallback, useState} from "react";
+import {memo, useCallback, useEffect, useState} from "react";
 import {AddTaskProps} from "./AddTask.props.ts";
 import { v4 as uuid } from 'uuid'
 export const AddTask =  memo(() => {
@@ -21,7 +21,6 @@ export const AddTask =  memo(() => {
         return `${currentDate.curentDate}-${currentDate.currentMounth}-${currentDate.currentYear}`
 
     }
-
     const addTask = useCallback(() => {
             const taskItem:AddTaskProps = {
                 id: id,
@@ -31,11 +30,13 @@ export const AddTask =  memo(() => {
                 endDate: dateTaskValue,
             }
             setTasks([...tasks, taskItem])
-
-    for (let i = 0; i < tasks.length; i++) {
-        localStorage.setItem(id, JSON.stringify(tasks[i]))
-    }
             // localStorage.setItem(taskId,JSON.stringify(taskItem))
+    }, [tasks])
+    
+    console.log(tasks)
+
+    useEffect(() => {
+        localStorage.setItem("items", JSON.stringify(tasks))
     }, [tasks])
 
     return <div className={styles.task__container}>
