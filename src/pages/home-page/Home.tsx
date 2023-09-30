@@ -6,14 +6,9 @@ import {RenderTask} from "../../components/render-task/RenderTask.tsx";
 
 ;
 export const Home: FC = () => {
-
-
-
-
-
     return <section className={styles.home}>
         <Header>TODO-LIST</Header>
         <AddTask></AddTask>
-        {/*<RenderTask arrTasks={}></RenderTask>*/}
+        <RenderTask></RenderTask>
     </section>;
 };
