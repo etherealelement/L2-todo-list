@@ -2,11 +2,12 @@
 import styles from "./AddTask.module.css";
 import {Button} from "../ui/button/Button.tsx";
 import {Input} from "../ui/input/input.tsx";
-import {memo, useCallback, useEffect, useState} from "react";
+import {memo, useEffect, useState} from "react";
 import {AddTaskProps} from "./AddTask.props.ts";
 import { v4 as uuid } from 'uuid'
-import {RenderTask} from "../render-task/RenderTask.tsx";
 import {Task} from "../task-item/Task.tsx";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {AddTaskForm} from "../../interfaces/taskItem-intarface.ts";
 export const AddTask =  memo(() => {
     // Опредялеям состояние инпутов
     const [nameTaskValue, setNameTaskValue] = useState<string>("");
@@ -23,32 +24,41 @@ export const AddTask =  memo(() => {
         return `${currentDate.curentDate}-${currentDate.currentMounth}-${currentDate.currentYear}`
 
     }
-    const addTask = useCallback(() => {
-            const taskItem:AddTaskProps = {
-                id: id,
-                taskName: nameTaskValue,
-                taskDescr: descrTaskValue,
-                createDate: createDate(),
-                endDate: dateTaskValue,
-            }
-            setTasks([...tasks, taskItem])
-            // localStorage.setItem(taskId,JSON.stringify(taskItem))
-    }, [tasks])
-    
-    console.log(tasks)
-
+    const addTask = () => {
+        const taskItem: AddTaskProps = {
+            id: id,
+            taskName: nameTaskValue,
+            taskDescr: descrTaskValue,
+            createDate: createDate(),
+            endDate: dateTaskValue,
+        }
+        setTasks([...tasks, taskItem])
+        // localStorage.setItem(taskId,JSON.stringify(taskItem))
+    }
     useEffect(() => {
         localStorage.setItem("items", JSON.stringify(tasks))
     }, [tasks])
 
+    // Работа с формой
+
+    const {register,handleSubmit} = useForm<AddTaskForm>({
+        defaultValues: {
+
+        }
+    })
+
+    const submit: SubmitHandler<AddTaskForm> = data => {
+        console.log(data)
+    }
+
     return <section>
         <div className={styles.task__container}>
             <label className={styles.task__label}>
-                <div className={styles.task__container}>
-                    <Input type={"text"} placeholder={"Введите название задачи"} onChange={(e) => setNameTaskValue(e.target.value)}></Input>
-                    <Input type={"text"} placeholder={"Введите описание задачи"} onChange={(e) => setDescrNameTaskValue(e.target.value)}></Input>
-                    <Input type={"date"} onChange={(e) => setDateTaskValue(e.target.value)}></Input>
-                </div>
+                <form className={styles.task__container} onSubmit={handleSubmit(submit)}>
+                    <Input type={"text"} placeholder={"Введите название задачи"} onChange={(e) => setNameTaskValue(e.target.value)} {...register("name")}></Input>
+                    <Input type={"text"} placeholder={"Введите описание задачи"} onChange={(e) => setDescrNameTaskValue(e.target.value)} {...register("description")}></Input>
+                    <Input type={"date"} onChange={(e) => setDateTaskValue(e.target.value)} {...register("date")}></Input>
+                </form>
                 <Button onClick={addTask}>Добавить задачу</Button>
             </label>
         </div>

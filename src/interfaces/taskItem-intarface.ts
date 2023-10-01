@@ -5,3 +5,9 @@ export interface TaskItemInterface {
     taskDescr: string;
     taskName: string;
 }
+
+export interface  AddTaskForm {
+    name: string;
+    description: string;
+    date: string;
+}
