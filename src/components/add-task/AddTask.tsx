@@ -5,6 +5,8 @@ import {Input} from "../ui/input/input.tsx";
 import {memo, useCallback, useEffect, useState} from "react";
 import {AddTaskProps} from "./AddTask.props.ts";
 import { v4 as uuid } from 'uuid'
+import {RenderTask} from "../render-task/RenderTask.tsx";
+import {Task} from "../task-item/Task.tsx";
 export const AddTask =  memo(() => {
     // Опредялеям состояние инпутов
     const [nameTaskValue, setNameTaskValue] = useState<string>("");
@@ -39,16 +41,21 @@ export const AddTask =  memo(() => {
         localStorage.setItem("items", JSON.stringify(tasks))
     }, [tasks])
 
-    return <div className={styles.task__container}>
-        <label className={styles.task__label}>
-            <div className={styles.task__container}>
-                <Input type={"text"} placeholder={"Введите название задачи"} onChange={(e) => setNameTaskValue(e.target.value)}></Input>
-                <Input type={"text"} placeholder={"Введите описание задачи"} onChange={(e) => setDescrNameTaskValue(e.target.value)}></Input>
-                <Input type={"date"} onChange={(e) => setDateTaskValue(e.target.value)}></Input>
-            </div>
-            <Button onClick={addTask}>Добавить задачу</Button>
-        </label>
-    </div>;
+    return <section>
+        <div className={styles.task__container}>
+            <label className={styles.task__label}>
+                <div className={styles.task__container}>
+                    <Input type={"text"} placeholder={"Введите название задачи"} onChange={(e) => setNameTaskValue(e.target.value)}></Input>
+                    <Input type={"text"} placeholder={"Введите описание задачи"} onChange={(e) => setDescrNameTaskValue(e.target.value)}></Input>
+                    <Input type={"date"} onChange={(e) => setDateTaskValue(e.target.value)}></Input>
+                </div>
+                <Button onClick={addTask}>Добавить задачу</Button>
+            </label>
+        </div>
+        <ul>
+            {tasks.map(item => <Task key={item.id} endDate={item.endDate} description={item.taskDescr} createDate={item.createDate}>{item.taskName}</Task>)}
+        </ul>
+    </section>;
 });
 
 

@@ -9,6 +9,5 @@ export const Home: FC = () => {
     return <section className={styles.home}>
         <Header>TODO-LIST</Header>
         <AddTask></AddTask>
-        <RenderTask></RenderTask>
     </section>;
 };
